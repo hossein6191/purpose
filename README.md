@@ -310,7 +310,36 @@ first line.
 
 ## Evidence
 
-The on-chain run is recorded here once it has run.
+Run on 19 October 2026 on GenLayer Studio (chain 61999) by `tests/on_chain/smoke.mjs`, from generated accounts funded from the
+Studio faucet, none of them anybody's wallet: **PERSON** consents, **UNIVERSITY**, **APPMAKER** and **INSURER** request, **STRANGER** tries what it may not. **39 passed, 0 failed**; transactions: 19 in 19 steps; sent a second time: none.
+The whole log is `tests/on_chain/smoke-run.log`. The sleep-lab study was found covered by purpose 1 and the app retraining by purpose 2, each paying PERSON the 0.05 GEN dividend in the same transaction; the insurer's premium setting was found covered by none and its 0.1 GEN bond went to PERSON; the DataRoom opened only the university's grant, for 0.2 GEN to PERSON.
+
+- `purpose.py` deployed at [`0x9fB09AaBC6b6afDF49630eef26F3B4392F522623`](https://explorer-studio.genlayer.com/address/0x9fB09AaBC6b6afDF49630eef26F3B4392F522623)
+- `data_room.py` deployed at [`0xf789038d91dBFdc421965ccE06A5fDeDbc3687ea`](https://explorer-studio.genlayer.com/address/0xf789038d91dBFdc421965ccE06A5fDeDbc3687ea)
+
+- the code deployed at 0x9fB09AaBC6b6afDF49630eef26F3B4392F522623 is byte for byte contracts/purpose.py: 51811 bytes, sha256 1287e1260b76023b23b2917f6335572bc1f5e47a9552678dbc899f63bd355cdf
+- the code deployed at 0xf789038d91dBFdc421965ccE06A5fDeDbc3687ea is byte for byte contracts/fixtures/data_room.py: 12080 bytes, sha256 a6fb3c169a43fb25bb8666eee79e5e5acef579baa1cb0ecbf72728d89799eece
+
+| step | by | transactions | votes |
+|---|---|---|---|
+| DataRoom is bound to the Purpose address it was deployed with, and holds nothing yet | PERSON | [0xe36c3e3e…](https://explorer-studio.genlayer.com/tx/0xe36c3e3ede89a79dcd5fa594e004367016877cc6a046fec9184860f7b7c4a9ae), [0xefe1d35e…](https://explorer-studio.genlayer.com/tx/0xefe1d35e8403cb9363f6f42fc608b850800ece94440f619c0579bec8347b7a4b) | 3 agree, 0 disagree, 2 idle |
+| PERSON consents: two purposes, a dividend of 0.05 GEN per granted request, an access fee of 0.2 GEN, no value moved | PERSON | [0x3c8650ae…](https://explorer-studio.genlayer.com/tx/0x3c8650aeae323eddf96b25a848fedd91a7ff15c63c285cd9707935a5c442d9ce) | 3 agree, 0 disagree, 2 idle |
+| UNIVERSITY deposits 0.15 GEN of credit: the request bond and the dividend; no model runs | UNIVERSITY | [0x525d4796…](https://explorer-studio.genlayer.com/tx/0x525d4796921c1e1e40385fc0501bfa8d768370fa2b95126a865792ba871bc83c) | 3 agree, 0 disagree, 2 idle |
+| APPMAKER deposits 0.15 GEN of credit: the request bond and the dividend; no model runs | APPMAKER | [0xe639a772…](https://explorer-studio.genlayer.com/tx/0xe639a772ddc2c66683970fbc507ce806f6cb5718fd8584392546f2112133d02b) | 3 agree, 0 disagree, 2 idle |
+| INSURER deposits 0.15 GEN of credit: the request bond and the dividend; no model runs | INSURER | [0x58aa3cf5…](https://explorer-studio.genlayer.com/tx/0x58aa3cf5eca0d5ecaf0d6cb8bec83e35a233d61ab44168992ab7a4150acabe4e) | 3 agree, 0 disagree, 2 idle |
+| UNIVERSITY's sleep-lab study, published as averages, is found covered by purpose 1 | UNIVERSITY | [0x1c6d7a81…](https://explorer-studio.genlayer.com/tx/0x1c6d7a81d5c416281bdeb0df71cdfc1e6b099cfb50801d844f1b542a0308286d) | 3 agree, 0 disagree, 2 idle |
+| APPMAKER's retraining of the app's sleep-stage detection is found covered by purpose 2 | APPMAKER | [0x09034acc…](https://explorer-studio.genlayer.com/tx/0x09034acc968df2fa98b7266a5b8f79655c8cee8c2ca671f0276222c4e07b74ea) | 3 agree, 0 disagree, 2 idle |
+| INSURER's premium setting is found covered by no purpose: none | INSURER | [0xb2176530…](https://explorer-studio.genlayer.com/tx/0xb21765305c910aea9ea2ad0cad4efe8ae1d45865c29beca5f1e2b1cf0b4cdfad) | 3 agree, 0 disagree, 2 idle |
+| INSURER states the same use again: refused by its digest before any model runs, nothing taken | INSURER | [0xb90e21d2…](https://explorer-studio.genlayer.com/tx/0xb90e21d24316c21115c23f52fd1ccaef432cb630f463a078ea57ae4472a59956) | 3 agree, 0 disagree, 2 idle |
+| STRANGER tries to revoke K1: refused, only the person may | STRANGER | [0x2e174ea6…](https://explorer-studio.genlayer.com/tx/0x2e174ea60ca9bba149a2ec59bec0e36efd7fb8d17d4e83bddcd471a3cfaf67bf) | 3 agree, 0 disagree, 2 idle |
+| UNIVERSITY opens its grant: Purpose names it as the requester and names the 0.2 GEN access fee, so the room opens | UNIVERSITY | [0x7fe97506…](https://explorer-studio.genlayer.com/tx/0x7fe975068452581e1bc06726f81511422495f32089d756e66e25de8b2aa70fa8) | 3 agree, 0 disagree, 2 idle |
+| INSURER, which holds no grant, tries to open the university's: refused, and the 0.2 GEN come back | INSURER | [0x5638c0f7…](https://explorer-studio.genlayer.com/tx/0x5638c0f7219ce52838b1970840e29b2b51be9b32d62e9ee50a7462220b87a8da) | 3 agree, 0 disagree, 2 idle |
+| UNIVERSITY opens the same grant again: refused, a grant opens once, refunded | UNIVERSITY | [0x731c7de8…](https://explorer-studio.genlayer.com/tx/0x731c7de8f8f937e50943566ed501ac53d9bd9d85135b7eadba4c19cb9fc94b9a) | 3 agree, 0 disagree, 2 idle |
+| PERSON revokes K1; the two grants made before stand | PERSON | [0x76c4750b…](https://explorer-studio.genlayer.com/tx/0x76c4750bcda2e10c586bc46924f75d1b30178c5ddcedc34884aa8ea5321332c9) | 5 agree, 0 disagree, 0 idle |
+| APPMAKER's new request on the revoked record is refused before any model runs | APPMAKER | [0x3bb0b3a7…](https://explorer-studio.genlayer.com/tx/0x3bb0b3a74fcc19da914ab0719e5298952632d76cf90923cf495caa9f0c01f074) | 3 agree, 0 disagree, 2 idle |
+| UNIVERSITY withdraws the 0.1 GEN of credit it has left | UNIVERSITY | [0x2369c585…](https://explorer-studio.genlayer.com/tx/0x2369c5853bac20b9487084c9abbd944adecb91c04daf691f9e68994541284eff) | 3 agree, 0 disagree, 2 idle |
+| APPMAKER withdraws the 0.1 GEN of credit it has left | APPMAKER | [0x967075e7…](https://explorer-studio.genlayer.com/tx/0x967075e77d7966c253f037ca45f9f70239c62f7f6f5eb69ebcb6b32078a9fa1c) | 3 agree, 0 disagree, 2 idle |
+| INSURER withdraws the 0.05 GEN of credit it has left | INSURER | [0x6aaf868f…](https://explorer-studio.genlayer.com/tx/0x6aaf868f27aaab662084a81b830de3eebe7552d934d8c088b5d2d1b840930791) | 5 agree, 0 disagree, 0 idle |
 
 ## Licence
 

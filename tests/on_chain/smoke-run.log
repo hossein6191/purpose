@@ -1,0 +1,87 @@
+[keeper] starting 2026-10-19T05:54:30.306Z
+[05:54:36] PERSON     0xEbF028c0354BAAfAE183c56E6A699154E72D6615  the person whose sleep tracker nights K1 records, and who is paid for every reading and opening
+           UNIVERSITY 0xB161aD28C2fBE788B9E61eB1598BB0cedeA23d31  the university sleep lab, whose study is covered by purpose 1
+           APPMAKER   0x2f599F7A2E277e73a126A295B4D07d2F8121e6e2  the maker of the sleep tracker app, whose retraining is covered by purpose 2
+           INSURER    0x5a1370C7E59fAE95219808b9af40a4c32Fae74C7  the insurer, whose premium setting no purpose covers
+           STRANGER   0xa43D6FBe23d0f9A42891EF191BA0d98d3fA50626  a stranger, who tries to revoke somebody else's consent
+
+[05:54:36] ---- 1: deploy both contracts
+      [05:55:23] PERSON deploy purpose.py  0xe36c3e3ede89a79dcd5fa594e004367016877cc6a046fec9184860f7b7c4a9ae  3 agree, 0 disagree, 2 idle  SUCCESS  0x9fB09AaBC6b6afDF49630eef26F3B4392F522623
+      [05:55:58] PERSON deploy data_room.py  0xefe1d35e8403cb9363f6f42fc608b850800ece94440f619c0579bec8347b7a4b  3 agree, 0 disagree, 2 idle  SUCCESS  0xf789038d91dBFdc421965ccE06A5fDeDbc3687ea
+      Purpose at 0x9fB09AaBC6b6afDF49630eef26F3B4392F522623
+      DataRoom at 0xf789038d91dBFdc421965ccE06A5fDeDbc3687ea
+PASS  DataRoom is bound to the Purpose address it was deployed with, and holds nothing yet  - {"purpose":"0x9fb09aabc6b6afdf49630eef26f3b4392f522623","openings":0,"refunds":0,"paid_total":"0","fee":"the access fee the record's person set at consent on Purpose, exactly","opens_only":"a grant on Purpose, for its own requester, once"}
+
+[05:55:59] ---- 2: PERSON's consent, in their own words, and the requesters' credit
+      [05:56:39] PERSON consent(Sleep tracker nights, , ["Academic research in, 50000000000000000, 200000000000000000)  0x3c8650aeae323eddf96b25a848fedd91a7ff15c63c285cd9707935a5c442d9ce  3 agree, 0 disagree, 2 idle  SUCCESS
+PASS  PERSON consents: two purposes, a dividend of 0.05 GEN per granted request, an access fee of 0.2 GEN, no value moved  - 3 agree, 0 disagree, 2 idle  {"ok": true, "record": "K1", "purposes": 2, "dividend": "50000000000000000", "access_fee": "200000000000000000", "request_bond": "1000000000
+PASS  the record id is read from the receipt  - K1
+PASS  record(K1): PERSON's address, the two purposes word for word, the whole price, active  - {"person":"0xebf028c0354baafae183c56e6a699154e72d6615","status":"active","stake":"150000000000000000","access_fee":"200000000000000000"}
+      [05:57:20] UNIVERSITY deposit() +0.15 GEN  0x525d4796921c1e1e40385fc0501bfa8d768370fa2b95126a865792ba871bc83c  3 agree, 0 disagree, 2 idle  SUCCESS
+PASS  UNIVERSITY deposits 0.15 GEN of credit: the request bond and the dividend; no model runs  - 3 agree, 0 disagree, 2 idle
+      [05:57:59] APPMAKER deposit() +0.15 GEN  0xe639a772ddc2c66683970fbc507ce806f6cb5718fd8584392546f2112133d02b  3 agree, 0 disagree, 2 idle  SUCCESS
+PASS  APPMAKER deposits 0.15 GEN of credit: the request bond and the dividend; no model runs  - 3 agree, 0 disagree, 2 idle
+      [05:58:44] INSURER deposit() +0.15 GEN  0x58aa3cf5eca0d5ecaf0d6cb8bec83e35a233d61ab44168992ab7a4150acabe4e  3 agree, 0 disagree, 2 idle  SUCCESS
+PASS  INSURER deposits 0.15 GEN of credit: the request bond and the dividend; no model runs  - 3 agree, 0 disagree, 2 idle
+
+[05:58:44] ---- 3: three stated uses, each read against PERSON's purposes four ways
+      [06:00:04] UNIVERSITY request(K1, A study at a universit)  0x1c6d7a81d5c416281bdeb0df71cdfc1e6b099cfb50801d844f1b542a0308286d  3 agree, 0 disagree, 2 idle  SUCCESS
+PASS  UNIVERSITY's sleep-lab study, published as averages, is found covered by purpose 1  - 3 agree, 0 disagree, 2 idle  1
+PASS  and a grant is stored, the 0.05 GEN dividend reaches PERSON in the same transaction, the bond stays in credit  - {"university":"0","person":"50000000000000000"}
+      [06:01:01] APPMAKER request(K1, Retraining the app's s)  0x09034acc968df2fa98b7266a5b8f79655c8cee8c2ca671f0276222c4e07b74ea  3 agree, 0 disagree, 2 idle  SUCCESS
+PASS  APPMAKER's retraining of the app's sleep-stage detection is found covered by purpose 2  - 3 agree, 0 disagree, 2 idle  2
+PASS  and a second grant is stored, another 0.05 GEN to PERSON  - {"appmaker":"0","person":"50000000000000000"}
+      [06:01:55] INSURER request(K1, Setting health insuran)  0xb21765305c910aea9ea2ad0cad4efe8ae1d45865c29beca5f1e2b1cf0b4cdfad  3 agree, 0 disagree, 2 idle  SUCCESS
+PASS  INSURER's premium setting is found covered by no purpose: none  - 3 agree, 0 disagree, 2 idle  none
+PASS  and the insurer's 0.1 GEN bond goes to PERSON, the dividend stays in the insurer's credit  - {"insurer":"0","person":"100000000000000000"}
+PASS  all reading and grant ids are read from the receipts  - R1 R3 G1 G2
+      [06:02:35] INSURER request(K1, Setting health insuran)  0xb90e21d24316c21115c23f52fd1ccaef432cb630f463a078ea57ae4472a59956  3 agree, 0 disagree, 2 idle  ERROR
+PASS  INSURER states the same use again: refused by its digest before any model runs, nothing taken  - 3 agree, 0 disagree, 2 idle  [EXPECTED] this address already stated this use of K1 and it was judged in R3; the same use is judged once, so state another use in other wo
+      [06:03:15] STRANGER revoke(K1)  0x2e174ea60ca9bba149a2ec59bec0e36efd7fb8d17d4e83bddcd471a3cfaf67bf  3 agree, 0 disagree, 2 idle  ERROR
+PASS  STRANGER tries to revoke K1: refused, only the person may  - 3 agree, 0 disagree, 2 idle  [EXPECTED] only the person of K1 may revoke it
+
+[06:03:15] ---- 4: the data room opens access only under a grant, at the fee K1 names
+      [06:03:54] UNIVERSITY open(G1) +0.2 GEN  0x7fe975068452581e1bc06726f81511422495f32089d756e66e25de8b2aa70fa8  3 agree, 0 disagree, 2 idle  SUCCESS
+PASS  UNIVERSITY opens its grant: Purpose names it as the requester and names the 0.2 GEN access fee, so the room opens  - 3 agree, 0 disagree, 2 idle  {"ok": true, "grant": "G1", "record": "K1", "fee": "200000000000000000", "paid_to": "0xebf028c0354baafae183c56e6a699154e72d6615", "purpose":
+PASS  and the 0.2 GEN reach PERSON in the same call  - {"university":"-200000000000000000","person":"200000000000000000"}
+      [06:04:37] INSURER open(G1) +0.2 GEN  0x5638c0f7219ce52838b1970840e29b2b51be9b32d62e9ee50a7462220b87a8da  3 agree, 0 disagree, 2 idle  SUCCESS
+PASS  INSURER, which holds no grant, tries to open the university's: refused, and the 0.2 GEN come back  - 3 agree, 0 disagree, 2 idle  G1 was granted to another address; a grant opens only for its own requester
+      [06:05:16] UNIVERSITY open(G1) +0.2 GEN  0x731c7de8f8f937e50943566ed501ac53d9bd9d85135b7eadba4c19cb9fc94b9a  3 agree, 0 disagree, 2 idle  SUCCESS
+PASS  UNIVERSITY opens the same grant again: refused, a grant opens once, refunded  - 3 agree, 0 disagree, 2 idle  G1 was already opened here; a grant opens once
+
+[06:05:17] ---- 5: PERSON revokes, the grants stand, and the requesters take back their credit
+      [06:05:56] PERSON revoke(K1)  0x76c4750bcda2e10c586bc46924f75d1b30178c5ddcedc34884aa8ea5321332c9  5 agree, 0 disagree, 0 idle  SUCCESS
+PASS  PERSON revokes K1; the two grants made before stand  - 5 agree, 0 disagree, 0 idle  {"ok": true, "record": "K1", "status": "revoked", "revoked_at": 1792389919, "grants_stand": 2}
+      [06:06:36] APPMAKER request(K1, Measuring how the app')  0x3bb0b3a74fcc19da914ab0719e5298952632d76cf90923cf495caa9f0c01f074  3 agree, 0 disagree, 2 idle  ERROR
+PASS  APPMAKER's new request on the revoked record is refused before any model runs  - 3 agree, 0 disagree, 2 idle  [EXPECTED] K1 was revoked by its person at 1792389919 and takes no new request; the grants made before it was revoked st
+      [06:07:17] UNIVERSITY withdraw(100000000000000000)  0x2369c5853bac20b9487084c9abbd944adecb91c04daf691f9e68994541284eff  3 agree, 0 disagree, 2 idle  SUCCESS
+PASS  UNIVERSITY withdraws the 0.1 GEN of credit it has left  - 3 agree, 0 disagree, 2 idle  {"ok": true, "returned": "100000000000000000", "credit": "0"}
+      [06:08:01] APPMAKER withdraw(100000000000000000)  0x967075e77d7966c253f037ca45f9f70239c62f7f6f5eb69ebcb6b32078a9fa1c  3 agree, 0 disagree, 2 idle  SUCCESS
+PASS  APPMAKER withdraws the 0.1 GEN of credit it has left  - 3 agree, 0 disagree, 2 idle  {"ok": true, "returned": "100000000000000000", "credit": "0"}
+      [06:08:41] INSURER withdraw(50000000000000000)  0x6aaf868f27aaab662084a81b830de3eebe7552d934d8c088b5d2d1b840930791  5 agree, 0 disagree, 0 idle  SUCCESS
+PASS  INSURER withdraws the 0.05 GEN of credit it has left  - 5 agree, 0 disagree, 0 idle  {"ok": true, "returned": "50000000000000000", "credit": "0"}
+
+[06:08:42] ---- 6: the views, the code, and the money
+PASS  record(K1): revoked, three readings, two grants, one refused, 0.1 GEN of dividends and 0.1 GEN of bonds paid  - {"status":"revoked","readings":3,"grants":2,"refused":1}
+PASS  grant(university's): the university, purpose 1 in PERSON's words, the use exactly as stated, the access fee, the record now revoked  - {"requester":"0xb161ad28c2fbe788b9e61eb1598bb0cedea23d31","purpose":1}
+PASS  grant(appmaker's): the app maker, purpose 2, its use exactly as stated  - {"requester":"0x2f599f7a2e277e73a126a295b4d07d2f8121e6e2","purpose":2}
+PASS  reading(insurer's): none, no grant, the bond to PERSON  - {"finding":"none","to_person":"100000000000000000"}
+PASS  readings_of(K1, 0, 20): three readings, in order  - ["1","2","none"]
+PASS  grants_of(UNIVERSITY): one grant  - {"who":"0xb161ad28c2fbe788b9e61eb1598bb0cedea23d31","total":1,"offset":0,"limit":20,"rows":[{"grant":"G1","record":"K1","purpose":1,"at":1792389526}]}
+PASS  the room: the university's grant opened once for 0.2 GEN under purpose 1, paid to PERSON; the app maker's not opened  - {"access":{"grant":"G1","opened":true,"record":"K1","requester":"0xb161ad28c2fbe788b9e61eb1598bb0cedea23d31","paid_to":"0xebf028c0354baafae183c56e6a699154e72d6615","fee":"200000000000000000","purpose":1,"opening":1},"tally":{"record":"K1","opened":1,"earned":"200000000000000000"}}
+PASS  credit() is zero for every requester: nothing is left held for anybody  - ["0","0","0"]
+PASS  stats(): one record, revoked, three readings, two grants, one none, nothing held  - {"records":1,"active":0,"revoked":1,"readings":3,"grants":2,"none":1,"unclear":0,"refunds":0,"credits_held":"0","dividends_total":"100000000000000000","bonds_total":"100000000000000000","fees_total":"0","balance_owed":"0"}
+PASS  rules(): the two questions word for word, four askings, the combine rule, the unclear fee and the limits  - value,questions,askings,reading,combine,compared,not_asked,money,settlement,who,sizes,limits,untrusted
+PASS  both contracts' own balances are zero  - 0 / 0
+PASS  the code deployed at 0x9fB09AaBC6b6afDF49630eef26F3B4392F522623 is byte for byte contracts/purpose.py  - 51811 bytes, sha256 1287e1260b76023b23b2917f6335572bc1f5e47a9552678dbc899f63bd355cdf
+PASS  the code deployed at 0xf789038d91dBFdc421965ccE06A5fDeDbc3687ea is byte for byte fixtures/data_room.py  - 12080 bytes, sha256 a6fb3c169a43fb25bb8666eee79e5e5acef579baa1cb0ecbf72728d89799eece
+PASS  over the run every account ends exactly where the receipts say, PERSON 0.4 GEN up  - PERSON 0.4 (receipts 0.4)  UNIVERSITY -0.25 (receipts -0.25)  APPMAKER -0.05 (receipts -0.05)  INSURER -0.1 (receipts -0.1)  STRANGER 0 (receipts 0)
+
+39 passed, 0 failed
+Purpose: 0x9fB09AaBC6b6afDF49630eef26F3B4392F522623  DataRoom: 0xf789038d91dBFdc421965ccE06A5fDeDbc3687ea
+transactions: 19 in 19 steps; sent a second time: none
+requestUniversity    0x1c6d7a81d5c416281bdeb0df71cdfc1e6b099cfb50801d844f1b542a0308286d 3 agree, 0 disagree, 2 idle  1 R1 G1
+requestAppmaker      0x09034acc968df2fa98b7266a5b8f79655c8cee8c2ca671f0276222c4e07b74ea 3 agree, 0 disagree, 2 idle  2 R2 G2
+requestInsurer       0xb21765305c910aea9ea2ad0cad4efe8ae1d45865c29beca5f1e2b1cf0b4cdfad 3 agree, 0 disagree, 2 idle  none R3 
+
+exit 0
